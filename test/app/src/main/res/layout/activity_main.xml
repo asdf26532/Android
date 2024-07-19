@@ -8,19 +8,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/et_id"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:textColor="#FF0000"
-        android:textSize="20sp"
-        android:text="예제" />
+        android:hint="아이디를 입력하세요." />
 
-    <TextView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#37FF00"
-        android:textSize="20sp"
-        android:text="연습"/>
-
+        android:text="로그인" />
 
 </LinearLayout>
