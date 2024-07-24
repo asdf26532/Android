@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,14 +33,41 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
     @Override
     public void onBindViewHolder(@NonNull MainAdapter.CustomViewHolder holder, int position) {
         holder.iv_profile.setImageResource(arrayList.get(position).getIv_profile());
+        holder.tv_name.setText(arrayList.get(position).getTv_name());
+        holder.tv_content.setText(arrayList.get(position).getTv_content());
 
+        holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String curName = holder.tv_name.getText().toString();
+                Toast.makeText(v.getContext(),curName,Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                remove(holder.getAdapterPosition());
+                return true;
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (null != arrayList ? arrayList.size() : 0 );
+    }
+
+    public void remove(int position) {
+        try {
+            arrayList.remove(position);
+            notifyItemRemoved(position);
+
+        }   catch (IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
