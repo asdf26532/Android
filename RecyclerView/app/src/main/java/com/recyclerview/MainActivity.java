@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainData mainData = new MainData(R.drawable.ic_launcher_background, "Lee","리사이클러뷰");
+                MainData mainData = new MainData(R.mipmap.ic_launcher, "Lee","리사이클러뷰");
                 arrayList.add(mainData);
                 mainAdapter.notifyDataSetChanged();
 
