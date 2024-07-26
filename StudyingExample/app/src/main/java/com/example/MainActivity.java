@@ -1,26 +1,23 @@
 package com.example;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn1,btn2,btn3,btn4;
+
+    Button btn_start, btn_stop;
+    Thread thread;
+    boolean isThread = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,50 +25,45 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn2 = (Button) findViewById(R.id.btn2);
-        btn3 = (Button) findViewById(R.id.btn3);
-        btn4 = (Button) findViewById(R.id.btn4);
+        btn_start = (Button) findViewById(R.id.btn_start);
+        btn_stop = (Button) findViewById(R.id.btn_stop);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        // 쓰레드 시작
+        btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment1 fragment1 = new Fragment1();
-                transaction.replace(R.id.frame, fragment1);
-                transaction.commit();
+                isThread = true;
+                thread = new Thread(){
+                  public void run(){
+                      while (isThread){
+                          try {
+                              sleep(5000);
+                          } catch (InterruptedException e) {
+                              throw new RuntimeException(e);
+                          }
+                          handler.sendEmptyMessage(0);
+                      }
+                  }
+                };
+
+                thread.start();
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        // 쓰레드 종료
+        btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment2 fragment2 = new Fragment2();
-                transaction.replace(R.id.frame, fragment2);
-                transaction.commit();
+                isThread = false;
             }
         });
+    }
 
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment3 fragment3 = new Fragment3();
-                transaction.replace(R.id.frame, fragment3);
-                transaction.commit();
-            }
-        });
-
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment4 fragment4 = new Fragment4();
-                transaction.replace(R.id.frame, fragment4);
-                transaction.commit();
-            }
-        });
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            Toast.makeText(getApplicationContext(), "오류 발생", Toast.LENGTH_SHORT).show();
+        }
     };
+
 }
