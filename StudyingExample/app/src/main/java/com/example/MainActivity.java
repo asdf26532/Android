@@ -1,67 +1,58 @@
 package com.example;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_start, btn_stop;
-    Thread thread;
-    boolean isThread = false;
+    Button btn_dialog;
+    TextView tv_result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        btn_start = findViewById(R.id.btn_start);
-        btn_stop = findViewById(R.id.btn_stop);
+        btn_dialog = (Button) findViewById(R.id.btn_dialog);
+        tv_result = (TextView) findViewById(R.id.tv_result);
 
-        Handler handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                Log.d("HandlerDebug", "Toast message is being shown");
-                Toast.makeText(MainActivity.this, "오류 발생", Toast.LENGTH_LONG).show();
-            }
-        };
-
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        btn_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isThread = true;
-                thread = new Thread() {
-                    public void run() {
-                        while (isThread) {
-                            try {
-                                sleep(5000);
-                                Log.d("ThreadDebug", "Handler message sent");
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            handler.sendEmptyMessage(0);
-                        }
+                AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
+                ad.setIcon(R.mipmap.ic_launcher);
+                ad.setTitle("제목");
+                ad.setMessage("메세지 내용");
+
+                final EditText et = new EditText(MainActivity.this);
+                ad.setView(et);
+                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String result = et.getText().toString();
+                        tv_result.setText(result);
+                        dialog.dismiss();
                     }
-                };
+                });
 
-                thread.start();
+                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                ad.show();
+
             }
         });
 
-        btn_stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isThread = false;
-            }
-        });
     }
 }
