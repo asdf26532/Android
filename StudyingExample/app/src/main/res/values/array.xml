@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="test">
+        <item>안드로이드</item>
+        <item>드롭다운</item>
+        <item>스피너</item>
+
+    </string-array>
+
+</resources>
