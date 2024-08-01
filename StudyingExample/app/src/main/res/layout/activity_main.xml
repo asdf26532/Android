@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:entries="@array/test">
-    </Spinner>
 
-    <TextView
-        android:id="@+id/tv_result"
+    <Button
+        android:id="@+id/btn_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="드롭다운 결과"/>
+        android:layout_weight="1"
+        android:text="재생"/>
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="정지"/>
 
 
 </LinearLayout>
