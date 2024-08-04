@@ -36,12 +36,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch (menuItem.getItemId()){
-                    case R.id.s:
-                        setFrag(0);
-                        break;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.airplane) {
+                    setFrag(0);
+                } else if (itemId == R.id.man) {
+                    setFrag(1);
+                } else if (itemId == R.id.ring) {
+                    setFrag(2);
+                } else if (itemId == R.id.call) {
+                    setFrag(3);
+                } else if (itemId == R.id.security) {
+                    setFrag(4);
                 }
-
                 return true;
             }
         });
