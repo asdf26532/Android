@@ -1,36 +1,37 @@
 package com.example;
 
-import android.content.IntentFilter;
-import android.net.wifi.WifiManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.MediaController;
+import android.widget.VideoView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static TextView tv_state;
-    private NetworkReceiver receiver;
+    private VideoView videoView;
+    private MediaController mediaController;
+    private String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp3";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv_state = findViewById(R.id.tv_state);
+        videoView = (VideoView) findViewById(R.id.videoView);
 
-        IntentFilter filter = new IntentFilter();
-        receiver = new NetworkReceiver();
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        registerReceiver(receiver, filter);
+        mediaController = new MediaController(this);
+        mediaController.setAnchorView(videoView);
+        Uri uri = Uri.parse(videoURL);
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
 
-    }
+        videoView.start();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 브로드캐스트 리시버 해제
-        unregisterReceiver(receiver);
+
+
     }
 }
