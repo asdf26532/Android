@@ -3,7 +3,7 @@ package com.firebaseliststudy;
 public class User {
     private String profile;
     private String id;
-    private int password;
+    private int pw;
     private String UserName;
 
 
@@ -25,12 +25,12 @@ public class User {
         this.id = id;
     }
 
-    public int getPassword() {
-        return password;
+    public int getPw() {
+        return pw;
     }
 
-    public void setPassword(int password) {
-        this.password = password;
+    public void setPw(int pw) {
+        this.pw = pw;
     }
 
     public String getUserName() {
