@@ -41,7 +41,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation (libs.glide)
     implementation(libs.firebase.database)
-    annotationProcessor(libs.complier)
+    annotationProcessor(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
