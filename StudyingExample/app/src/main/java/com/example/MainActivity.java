@@ -1,31 +1,65 @@
 package com.example;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentPagerAdapter fragmentPagerAdapter;
-
-
+    private RadioGroup rg_gender;
+    private RadioButton rb_man,rb_woman;
+    private Button btn_result;
+    private String str_result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        viewPager.setAdapter(fragmentPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        rg_gender = findViewById(R.id.rg_gender);
+        rb_man = findViewById(R.id.rb_man);
+        rb_woman = findViewById(R.id.rb_woman);
+        btn_result = findViewById(R.id.btn_result);
+
+        rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int i) {
+
+                if( i == R.id.rb_man) {
+                    Toast.makeText(MainActivity.this, "남자 라디오 버튼", Toast.LENGTH_SHORT).show();
+                    str_result = rb_man.getText().toString();
+
+                } else if( i == R.id.rb_woman) {
+                    Toast.makeText(MainActivity.this, "여자 라디오 버튼", Toast.LENGTH_SHORT).show();
+                    str_result = rb_woman.getText().toString();
+
+                }
+
+            }
+        });
+
+        btn_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(str_result != null) {
+                    Toast.makeText(MainActivity.this, str_result, Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "버튼을 선택해주세요", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
 
 
     }
