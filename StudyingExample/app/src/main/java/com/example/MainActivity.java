@@ -3,8 +3,10 @@ package com.example;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,53 +15,46 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RadioGroup rg_gender;
-    private RadioButton rb_man,rb_woman;
+    private TextView tv_result;
+    private CheckBox chk_red, chk_blue, chk_green;
     private Button btn_result;
-    private String str_result;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        chk_red = findViewById(R.id.chk_red);
+        chk_blue = findViewById(R.id.chk_blue);
+        chk_green = findViewById(R.id.chk_green);
 
-        rg_gender = findViewById(R.id.rg_gender);
-        rb_man = findViewById(R.id.rb_man);
-        rb_woman = findViewById(R.id.rb_woman);
+        tv_result = findViewById(R.id.tv_result);
         btn_result = findViewById(R.id.btn_result);
-
-        rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int i) {
-
-                if( i == R.id.rb_man) {
-                    Toast.makeText(MainActivity.this, "남자 라디오 버튼", Toast.LENGTH_SHORT).show();
-                    str_result = rb_man.getText().toString();
-
-                } else if( i == R.id.rb_woman) {
-                    Toast.makeText(MainActivity.this, "여자 라디오 버튼", Toast.LENGTH_SHORT).show();
-                    str_result = rb_woman.getText().toString();
-
-                }
-
-            }
-        });
 
         btn_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(str_result != null) {
-                    Toast.makeText(MainActivity.this, str_result, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(MainActivity.this, "버튼을 선택해주세요", Toast.LENGTH_SHORT).show();
+                String str_result = "";
+                if(chk_red.isChecked()){
+                    str_result += chk_red.getText().toString();
                 }
+                if(chk_blue.isChecked()){
+                    str_result += chk_blue.getText().toString();
+                }
+                if(chk_green.isChecked()){
+                    str_result += chk_green.getText().toString();
+                }
+
+                tv_result.setText(str_result);
 
 
             }
         });
+
+
+
 
 
     }
