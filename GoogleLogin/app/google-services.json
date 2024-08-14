@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1080363006240",
+    "project_id": "login-4d023",
+    "storage_bucket": "login-4d023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080363006240:android:11a74669cd50e5c98a3f45",
+        "android_client_info": {
+          "package_name": "com.smartfarm.googlelogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080363006240-c9tlf5ivr1fma89174qm2l99abnt4hab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartfarm.googlelogin",
+            "certificate_hash": "b0909eb03af5579c67e4c9d280e7e553564a9620"
+          }
+        },
+        {
+          "client_id": "1080363006240-vvjs04mmohhkjd4umu1ip46bebh71cst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw1lIk04Qxjr6_88gL8HFrH70SN_FD0xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080363006240-vvjs04mmohhkjd4umu1ip46bebh71cst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
