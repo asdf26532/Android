@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+
+
+
 }
 
 android {
@@ -38,7 +41,8 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     // 카카오 로그인
-    implementation("com.kakao.sdk:usermgmt:2.20.4")
+    implementation ("com.kakao.sdk:v2-user:2.20.3")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
