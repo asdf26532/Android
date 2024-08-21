@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KakaoLogin"
+        android:name=".KakaoApplication"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -34,7 +35,7 @@
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data android:host="oauth"
-                    android:scheme="kakao$a498e92bdd18a69b014bc63043ca5a49" />
+                    android:scheme="kakaoa498e92bdd18a69b014bc63043ca5a49" />
             </intent-filter>
         </activity>
 
