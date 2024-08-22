@@ -1,41 +1,58 @@
 package com.example;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
-import com.example.databinding.ActivityMainBinding;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding mBinding;
+    private UserDao mUserDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    //    setContentView(R.layout.activity_main);
-
-        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = mBinding.getRoot();
-        setContentView(view);
-
-        mBinding.tvHello.setText("바인딩 공부");
-        mBinding.btnOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"하이",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_frame, new TestFragment());
-        ft.commit();
+        setContentView(R.layout.activity_main);
 
 
+        UserDatabase database = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "test_db")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mUserDao = database.userDao();
+
+        // 삽입
+//        User user = new User();
+//        user.setName("Lee");
+//        user.setAge(30);
+//        user.setPhoneNumber("1234");
+//        mUserDao.setInsertUser(user);
+
+        // 조회
+        List<User> userList = mUserDao.getUserAll();
+        for (int i = 0; i < userList.size(); i++) {
+            Log.d("TEST", userList.get(i).getName() + userList.get(i).getPhoneNumber());
+
+        }
+
+        // 수정
+//        User user2 = new User();
+//        user2.setId(1);
+//        user2.setName("Kim");
+//        user2.setAge(22);
+//        user2.setPhoneNumber("5678");
+//        mUserDao.setUpdateUser(user2);
+
+        // 삭제
+        User user3 = new User();
+        user3.setId(2);
+        mUserDao.setDeleteUser(user3);
 
 
     }
