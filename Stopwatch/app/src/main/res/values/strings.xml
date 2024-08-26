@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Stopwatch</string>
+    
+    <string name="btn_start">시작</string>
+    <string name="btn_restart">초기화</string>
+    <string name="btn_pause">일시정지</string>
 </resources>
