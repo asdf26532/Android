@@ -45,7 +45,7 @@
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginBottom="100dp"
         android:backgroundTint="@color/btn_start"
@@ -56,7 +56,7 @@
 
     <Button
         android:id="@+id/btn_refresh"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:text="@string/btn_restart"
         android:backgroundTint="@color/btn_restart"
