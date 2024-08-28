@@ -6,5 +6,7 @@
     <color name="btn_start">#FF0000</color>
     <color name="btn_restart">#0037FF</color>
     <color name="btn_pause">#ECCE0A</color>
+    
+    <color name="blue">#0059ff</color>
 
 </resources>
