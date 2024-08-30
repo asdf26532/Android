@@ -7,4 +7,73 @@
     android:layout_height="match_parent"
     tools:context=".AddTodoActivity">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/edt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_marginHorizontal="20dp"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_importance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/importance"
+        app:layout_constraintTop_toBottomOf="@id/edt_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"/>
+    
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_importance"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/btn_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/importance_low"/>
+
+        <RadioButton
+            android:id="@+id/btn_middle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/importance_middle"/>
+
+        <RadioButton
+            android:id="@+id/btn_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/importance_high"/>
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/completion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="10dp"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
