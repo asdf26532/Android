@@ -34,6 +34,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    viewBinding {
+        enable = true
+    }
+
 }
 
 dependencies {
@@ -43,8 +48,17 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Retrofit and related dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)  // Gson converter for Retrofit
+    implementation(libs.okhttp)  // OkHttp client
+    implementation(libs.okhttp.logging)  // Logging interceptor for OkHttp
+    implementation(libs.gson)  // Gson library
+    
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
