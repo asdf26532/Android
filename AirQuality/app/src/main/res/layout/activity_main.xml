@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="해운대"
-        android:textSize="40sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:letterSpacing="-0.05"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_loaction_title"/>
 
     <ImageView
-        android:layout_width="10dp"
+        android:layout_width="15dp"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_thunder"
         app:layout_constraintStart_toEndOf="@id/tv_loaction_title"
@@ -76,6 +76,42 @@
         app:layout_constraintStart_toStartOf="@id/img_bg"
         app:layout_constraintTop_toBottomOf="@id/tv_count"
         android:text="보통"/>
+
+    <TextView
+        android:id="@+id/tv_check_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/measured_at"
+        app:layout_constraintTop_toBottomOf="@id/img_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:letterSpacing="-0.05"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_check_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2024-01-01 13:00"
+        android:letterSpacing="-0.05"
+        android:textColor="@color/text_light_grey"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_check_time_title"/>
+
+    <ImageView
+        android:id="@+id/btn_refresh"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/icon_refresh"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_check_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
