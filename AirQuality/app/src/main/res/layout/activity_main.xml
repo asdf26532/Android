@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tv_loaction_title"
+        android:id="@+id/tv_location_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="해운대"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline4"/>
 
     <TextView
-        android:id="@+id/tv_loaction_subtitle"
+        android:id="@+id/tv_location_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="대한민국 부산시"
@@ -28,15 +28,15 @@
         android:letterSpacing="-0.05"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/tv_loaction_title"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_location_title"/>
 
     <ImageView
         android:layout_width="15dp"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_thunder"
-        app:layout_constraintStart_toEndOf="@id/tv_loaction_title"
-        app:layout_constraintTop_toTopOf="@id/tv_loaction_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_loaction_title"
+        app:layout_constraintStart_toEndOf="@id/tv_location_title"
+        app:layout_constraintTop_toTopOf="@id/tv_location_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_location_title"
         android:layout_marginStart="9dp"/>
 
     <ImageView
