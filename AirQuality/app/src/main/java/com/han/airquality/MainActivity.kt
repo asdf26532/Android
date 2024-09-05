@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -91,16 +92,15 @@ class MainActivity : AppCompatActivity() {
     private fun showDialogForLocationServiceSetting() {
         getGPSPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ){result ->
-            if(result.resultCode == Activity.RESULT_OK){
-                if(isLocationServicesAvailable()) {
-                    isRunTimePermissionsGranted()
-                } else {
-                    Toast.makeText(this@MainActivity, "위치 서비스를 사용할 수 없습니다. 앱을 종료합니다", Toast.LENGTH_LONG).show()
-                    finish()
-                }
+        ) { result ->
+            Log.d("LOG : :: : : : :  ", result.resultCode.toString())
+            if (isLocationServicesAvailable()) {
+                isRunTimePermissionsGranted()
+            } else {
+                Toast.makeText(this@MainActivity, "위치 서비스를 사용할 수 없습니다. 앱을 종료합니다", Toast.LENGTH_LONG)
+                    .show()
+                finish()
             }
-
         }
 
         val builder : AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
