@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -17,10 +19,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.han.airquality.databinding.ActivityMainBinding
+import java.io.IOException
+import java.lang.IllegalArgumentException
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
+    lateinit var locationProvider: LocationProvider
 
     private val PERMISSIONS_REQUEST_CODE = 100
 
@@ -37,6 +43,44 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         chackAllPermissions()
+        updateUI()
+
+    }
+
+    private fun updateUI() {
+        locationProvider = LocationProvider(this@MainActivity)
+
+        val latitude : Double? = locationProvider.getLocationLatitude()
+        val longitude : Double? = locationProvider.getLocationLongitude()
+
+        if(latitude != null && longitude != null) {
+            // 1. 현재 위치 가져오고 UI업데이트
+            // 2. 미세먼지 수치 가져오고 UI언데이트
+
+
+        } else {
+            Toast.makeText(this, "위도, 경도 정보를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun getCurrentAddress (latitude : Double, longitude : Double) : Address? {
+        val geoCoder = Geocoder(this, Locale.KOREA)
+
+        val addresses : List<Address>? = try {
+            geoCoder.getFromLocation(latitude, longitude, 7)
+        }catch(ioException : IOException) {
+            Toast.makeText(this, "지오코더 서비스 이용불가", Toast.LENGTH_LONG).show()
+            return null
+        }catch (illegalArgumentException : IllegalArgumentException) {
+            Toast.makeText(this, "잘못된 위도, 경도 입니다", Toast.LENGTH_LONG).show()
+            return null
+        }
+
+        if(addresses.isNullOrEmpty()) {
+            Toast.makeText(this, "주소가 발견되지 않았습니다", Toast.LENGTH_LONG).show()
+            return null
+        }
+        return addresses[0]
 
     }
 
