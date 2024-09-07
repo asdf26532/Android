@@ -55,6 +55,12 @@ class MainActivity : AppCompatActivity() {
 
         if(latitude != null && longitude != null) {
             // 1. 현재 위치 가져오고 UI업데이트
+            val address = getCurrentAddress(latitude, longitude)
+
+            address?.let{
+                binding.tvLocationTitle.text = "${it.thoroughfare}"
+                binding.tvLocationSubtitle.text = "${it.countryName} ${it.adminArea}"
+            }
             // 2. 미세먼지 수치 가져오고 UI언데이트
 
 
@@ -126,6 +132,7 @@ class MainActivity : AppCompatActivity() {
 
             if(checkResult) {
                 // 위치값을 가져올수있음
+                updateUI()
             } else {
                 Toast.makeText(this@MainActivity, "권한이 거부되었습니다. 앱을 종료합니다", Toast.LENGTH_LONG).show()
                 finish()
