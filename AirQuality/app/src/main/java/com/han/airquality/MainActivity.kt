@@ -19,6 +19,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.han.airquality.databinding.ActivityMainBinding
+import com.han.airquality.retrofit.AirQualityResponse
+import com.han.airquality.retrofit.AirQualityService
+import com.han.airquality.retrofit.RetrofitConnection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.util.Locale
@@ -63,10 +69,48 @@ class MainActivity : AppCompatActivity() {
             }
             // 2. 미세먼지 수치 가져오고 UI언데이트
 
+            getAirQualityData(latitude, longitude)
 
         } else {
             Toast.makeText(this, "위도, 경도 정보를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun getAirQualityData(latitude: Double, longitude: Double) {
+        var retrofitAPI = RetrofitConnection.getInstance().create(
+            AirQualityService::class.java
+        )
+
+        retrofitAPI.getAirQualityData(
+            latitude.toString(),
+            longitude.toString(),
+            "992b5824-91d5-46f3-bfcb-b8975e1552d1"
+        ).enqueue(object : Callback<AirQualityResponse> {
+            override fun onResponse(
+                call: Call<AirQualityResponse>,
+                response: Response<AirQualityResponse>
+            ) {
+                if(response.isSuccessful) {
+                    Toast.makeText(this@MainActivity, "최신 데이터 업데이트 완료", Toast.LENGTH_LONG).show()
+                    response.body()?.let{ updateAirUI(it)}
+                } else {
+                    Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<AirQualityResponse>, t: Throwable) {
+                t.printStackTrace()
+                Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        )
+
+    }
+
+    private fun updateAirUI(airQualityData : AirQualityResponse){
+
+
     }
 
     private fun getCurrentAddress (latitude : Double, longitude : Double) : Address? {
