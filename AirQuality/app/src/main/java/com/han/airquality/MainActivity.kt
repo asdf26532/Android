@@ -27,6 +27,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import java.lang.IllegalArgumentException
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -48,9 +51,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        chackAllPermissions()
+        checkAllPermissions()
         updateUI()
-
+        setRefreshButton()
     }
 
     private fun updateUI() {
@@ -77,6 +80,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAirQualityData(latitude: Double, longitude: Double) {
+
+        Log.d("MainActivity", "Requesting data with Latitude: $latitude, Longitude: $longitude, API Key: 992b5824-91d5-46f3-bfcb-b8975e1552d1")
+
         var retrofitAPI = RetrofitConnection.getInstance().create(
             AirQualityService::class.java
         )
@@ -94,11 +100,14 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "최신 데이터 업데이트 완료", Toast.LENGTH_LONG).show()
                     response.body()?.let{ updateAirUI(it)}
                 } else {
-                    Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
+                    Log.e("MainActivity", "Error response code: ${response.code()}")
+                    Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다: ${response.code()}", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<AirQualityResponse>, t: Throwable) {
+                Log.e("MainActivity", "API 호출 실패: ${t.localizedMessage}")
                 t.printStackTrace()
                 Toast.makeText(this@MainActivity, "데이터를 가져올 수 없습니다", Toast.LENGTH_LONG).show()
             }
@@ -109,8 +118,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateAirUI(airQualityData : AirQualityResponse){
+        val pollutionData = airQualityData.data.current.pollution
 
+        // 수치를 지정
+        binding.tvCount.text = pollutionData.aqius.toString()
 
+        // 측정 날짜
+        val dateTime = ZonedDateTime.parse(pollutionData.ts).withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime()
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        binding.tvCheckTime.text = dateTime.format(dateFormatter).toString()
+
+        when(pollutionData.aqius) {
+            in 0..50 -> {
+                binding.tvTitle.text = "좋음"
+                binding.imgBg.setImageResource(R.drawable.bg_good)
+            }
+            in 51..150 -> {
+                binding.tvTitle.text = "보통"
+                binding.imgBg.setImageResource(R.drawable.bg_soso)
+            }
+            in 151..200 -> {
+                binding.tvTitle.text = "나쁨"
+                binding.imgBg.setImageResource(R.drawable.bg_bad)
+            }
+            else-> {
+                binding.tvTitle.text = "매우 나쁨"
+                binding.imgBg.setImageResource(R.drawable.bg_worst)
+            }
+        }
+    }
+
+    private fun setRefreshButton() {
+        binding.btnRefresh.setOnClickListener{
+            updateUI()
+        }
     }
 
     private fun getCurrentAddress (latitude : Double, longitude : Double) : Address? {
@@ -134,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun chackAllPermissions(){
+    private fun checkAllPermissions(){
         if(!isLocationServicesAvailable()){
             showDialogForLocationServiceSetting()
 
