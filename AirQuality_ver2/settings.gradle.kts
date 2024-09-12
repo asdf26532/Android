@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AirQuality"
+rootProject.name = "AirQuality_ver2"
 include(":app")
  
