@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         checkAllPermissions()
         updateUI()
         setRefreshButton()
-
         setFab()
     }
 
@@ -169,18 +168,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setRefreshButton() {
-        binding.btnRefresh.setOnClickListener{
-            updateUI()
+    private fun  setFab() {
+        binding.fab.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            intent.putExtra("currentLat", latitude)
+            intent.putExtra("currentLng", longitude)
+            startMapActivityResult.launch(intent)
         }
     }
 
-    private fun  setFab() {
-        binding.fab.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("currentLat", latitude)
-            intent.putExtra("currentLatLon", longitude)
-            startMapActivityResult.launch(intent)
+    private fun setRefreshButton() {
+        binding.btnRefresh.setOnClickListener{
+            updateUI()
         }
     }
 

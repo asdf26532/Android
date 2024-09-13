@@ -10,7 +10,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.han.airquality_ver2"
+        applicationId = "com.han.airquality"
         minSdk = 26
         targetSdk = 34
         versionCode = 2

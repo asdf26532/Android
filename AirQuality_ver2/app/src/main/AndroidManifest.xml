@@ -21,8 +21,8 @@
             android:exported="false" />
 
         <meta-data
-            android:name="com.google.android.geo.APT_KEY"
-            android:value="AIzaSyDtgkH3jZxBH4KVzUU_OWP-EvxL1_ypasw" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBxm6IdmSOL0_7L2tCeDd1grNCLyiSG18c" />
 
         <activity
             android:name=".MainActivity"
