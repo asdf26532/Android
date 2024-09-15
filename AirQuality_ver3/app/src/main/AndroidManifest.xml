@@ -25,6 +25,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="API_KEY" />
 
+        <!--앱 아이디 추가-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3519505839382720~3962538229" />
+
         <activity
             android:name="com.han.airquality_ver3.MainActivity"
             android:exported="true">
