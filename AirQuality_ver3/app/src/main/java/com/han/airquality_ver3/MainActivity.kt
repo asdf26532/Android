@@ -20,6 +20,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.han.airquality_ver3.databinding.ActivityMainBinding
 import com.han.airquality_ver3.retrofit.AirQualityResponse
 import com.han.airquality_ver3.retrofit.AirQualityService
@@ -73,7 +77,35 @@ class MainActivity : AppCompatActivity() {
         updateUI()
         setRefreshButton()
         setFab()
+
+        setBannerAds()
     }
+
+    private fun setBannerAds() {
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.adsBanner.loadAd(adRequest)
+
+        binding.adsBanner.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                Log.d("Ads Log", "배너 광고가 로드 되었습니다")
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+                Log.d("Ads Log", "배너 광고가 로드 실패 되었습니다")
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                Log.d("Ads Log", "배너 광고가 클릭 되었습니다")
+            }
+
+        }
+
+    }
+
 
     private fun updateUI() {
         locationProvider = LocationProvider(this@MainActivity)

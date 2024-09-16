@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AirQuality"
         tools:targetApi="31">
+
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
+
         <activity
             android:name="com.han.airquality_ver3.MapActivity"
             android:exported="false" />
