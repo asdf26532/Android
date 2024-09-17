@@ -20,10 +20,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.han.airquality_ver3.databinding.ActivityMainBinding
 import com.han.airquality_ver3.retrofit.AirQualityResponse
 import com.han.airquality_ver3.retrofit.AirQualityService
@@ -39,6 +43,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
+
+    var mInterstitialAd : InterstitialAd? = null
 
     lateinit var binding : ActivityMainBinding
     lateinit var locationProvider: LocationProvider
@@ -79,6 +85,30 @@ class MainActivity : AppCompatActivity() {
         setFab()
 
         setBannerAds()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setInterstitialAds()
+    }
+
+    private fun setInterstitialAds(){
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback(){
+            override fun onAdLoaded(p0: InterstitialAd) {
+                super.onAdLoaded(p0)
+                Log.d("Ads Log", "전면 광고 로드 성공")
+                mInterstitialAd = p0
+
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+                Log.d("Ads Log", "전면 광고 로드 실패")
+            }
+        })
+
+
     }
 
     private fun setBannerAds() {
@@ -202,10 +232,42 @@ class MainActivity : AppCompatActivity() {
 
     private fun  setFab() {
         binding.fab.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
-            intent.putExtra("currentLat", latitude)
-            intent.putExtra("currentLng", longitude)
-            startMapActivityResult.launch(intent)
+
+            if(mInterstitialAd != null) {
+                mInterstitialAd!!.fullScreenContentCallback = object : FullScreenContentCallback(){
+                    override fun onAdDismissedFullScreenContent() {
+                        super.onAdDismissedFullScreenContent()
+                        Log.d("Ads Log", "전면 광고가 닫혔습니다")
+
+                        val intent = Intent(this@MainActivity, MapActivity::class.java)
+                        intent.putExtra("currentLat", latitude)
+                        intent.putExtra("currentLng", longitude)
+                        startMapActivityResult.launch(intent)
+                    }
+
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                        super.onAdFailedToShowFullScreenContent(p0)
+                        Log.d("Ads Log", "전면 광고 열기 실패")
+                    }
+
+                    override fun onAdShowedFullScreenContent() {
+                        super.onAdShowedFullScreenContent()
+                        Log.d("Ads Log", "전면 광고 열기 성공")
+                        mInterstitialAd = null
+                    }
+                }
+
+                mInterstitialAd!!.show(this@MainActivity)
+
+            } else {
+                Log.d("Ads Log", "전면 광고가 로드 실패")
+                Toast.makeText(this, "잠시 후 다시 시도해주세요",Toast.LENGTH_LONG).show()
+            }
+
+
+
+
+
         }
     }
 
