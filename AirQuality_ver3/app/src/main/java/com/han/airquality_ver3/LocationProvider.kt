@@ -52,8 +52,8 @@ class LocationProvider(val context : Context) {
                     if(gpsLocation.accuracy > networkLocation.accuracy) {
                         location = gpsLocation
                     } else {
-                       // location = networkLocation
-                        location = gpsLocation
+                        location = networkLocation
+                        //location = gpsLocation 에뮬레이터용
                     }
                 } else {
                     if(gpsLocation != null) {
