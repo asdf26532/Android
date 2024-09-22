@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "424025969791",
+    "project_id": "chatapp-f42a2",
+    "storage_bucket": "chatapp-f42a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424025969791:android:ff7e5772b3d21daf2a9b4a",
+        "android_client_info": {
+          "package_name": "com.han.chattingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIO9ZzWxp7isl77sZnbesbohELaW4dUVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
