@@ -35,7 +35,11 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edtEmail.text.toString()
             val password = binding.edtPassword.text.toString()
 
-            login(email, password)
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "이메일과 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show()
+            } else {
+                login(email, password)
+            }
         }
 
         // 회원가입 버튼 이벤트
