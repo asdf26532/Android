@@ -65,10 +65,15 @@
         android:textColor="@color/white"
         android:textSize="20sp" />
 
-
-
-
-
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_google"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_signUp"
+        app:buttonSize="wide"
+        app:colorScheme="dark"/>
 
 
 
