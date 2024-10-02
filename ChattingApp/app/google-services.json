@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "424025969791",
+    "firebase_url": "https://chatapp-f42a2-default-rtdb.firebaseio.com",
     "project_id": "chatapp-f42a2",
     "storage_bucket": "chatapp-f42a2.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.han.chattingapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "424025969791-sbri57in8lnfq5pius6ooddql0egpkeo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.han.chattingapp",
+            "certificate_hash": "b0909eb03af5579c67e4c9d280e7e553564a9620"
+          }
+        },
+        {
+          "client_id": "424025969791-kqvj2ofc6ti5euphfdedoo0kbrfah800.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAIO9ZzWxp7isl77sZnbesbohELaW4dUVQ"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424025969791-kqvj2ofc6ti5euphfdedoo0kbrfah800.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
