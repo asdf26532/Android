@@ -13,6 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.han.chattingapp.databinding.ActivityLoginBinding
 
@@ -111,6 +112,16 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // 로그인 성공 시
+                    val firebaseUser = mAuth.currentUser
+                    val uid = firebaseUser?.uid
+                    val name = firebaseUser?.displayName
+                    val email = firebaseUser?.email
+
+                    // 파이어베이스 Realtime DB에 사용자 정보 저장
+                    if (uid != null && name != null && email != null) {
+                        addUserToDatabase(name, email, uid)
+                    }
+
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "Google 로그인 성공", Toast.LENGTH_LONG).show()
@@ -122,4 +133,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun addUserToDatabase(name: String, email: String, uId: String) {
+        val user = User(name, email, uId)
+        Firebase.database.reference.child("user").child(uId).setValue(user)
+    }
+
 }
