@@ -18,6 +18,12 @@
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
+
+        <!--admob 앱 아이디 추가-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3519505839382720~2285422641" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
