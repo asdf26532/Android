@@ -2,6 +2,7 @@ package com.han.chattingapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setBannerAds()
 
         // 인증 초기화
         mAuth = Firebase.auth
@@ -72,6 +79,32 @@ class MainActivity : AppCompatActivity() {
 
 
         })
+
+    }
+
+    private fun setBannerAds() {
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.adsBanner.loadAd(adRequest)
+
+        binding.adsBanner.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                Log.d("Ads Log", "배너 광고가 로드 되었습니다")
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+                Log.d("Ads Log", "배너 광고가 로드 실패 되었습니다")
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                Log.d("Ads Log", "배너 광고가 클릭 되었습니다")
+            }
+
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
