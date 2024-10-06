@@ -5,6 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,6 +24,8 @@ import com.google.firebase.ktx.Firebase
 import com.han.chattingapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
+    var mInterstitialAd : InterstitialAd? = null
 
     lateinit var binding: ActivityLoginBinding
     lateinit var mAuth: FirebaseAuth
@@ -65,7 +73,51 @@ class LoginActivity : AppCompatActivity() {
         binding.btnGoogle.setOnClickListener {
             googleSignIn()
         }
+
+        // 전면 광고 로드
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+                Log.d("AdLoad", "전면 광고 로드 성공")
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("AdLoad", "전면 광고 로드 실패: ${adError.message}")
+                mInterstitialAd = null
+            }
+        })
     }
+
+    private fun showInterstitialAdAndProceed() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    // 광고가 닫힌 후에 메인 화면으로 이동
+                    navigateToMain()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    Log.d("AdShow", "전면 광고 표시 실패")
+                    // 광고가 표시되지 않으면 바로 메인 화면으로 이동
+                    navigateToMain()
+                }
+            }
+            mInterstitialAd?.show(this)
+        } else {
+            // 광고가 로드되지 않았으면 바로 메인 화면으로 이동
+            navigateToMain()
+        }
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+
 
     private fun login(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -75,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
-                    finish()
+                    showInterstitialAdAndProceed()
                 } else {
                     // 실패 시 실행
                     Toast.makeText(this, "로그인 실패", Toast.LENGTH_LONG).show()
@@ -125,7 +177,9 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "Google 로그인 성공", Toast.LENGTH_LONG).show()
-                    finish()
+
+                    // 전면 광고를 보여준 후 메인 화면으로 이동
+                    showInterstitialAdAndProceed()
                 } else {
                     // 로그인 실패 시
                     Log.w("LoginActivity", "signInWithCredential:failure", task.exception)
